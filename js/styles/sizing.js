@@ -1,7 +1,7 @@
-const box = value => {
+const box = (width = 100, height) => {
   return {
-    width: value,
-    height: value
+    width: width,
+    height: height || width
   };
 };
 

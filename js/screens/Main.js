@@ -12,6 +12,34 @@ export default class Main extends Component {
     };
   };
 
+  goScreen = screenName => {
+    this.props.navigation.navigate(screenName);
+  };
+
+  goDiagnostics = () => {
+    this.goScreen("Diagnostics");
+  };
+
+  goESN = () => {
+    this.goScreen("ESN");
+  };
+
+  goGPS = () => {
+    this.goScreen("GPS");
+  };
+
+  goTachometer = () => {
+    this.goScreen("Tachometer");
+  };
+
+  goOdometer = () => {
+    this.goScreen("Odometer");
+  };
+
+  goVIN = () => {
+    this.goScreen("VIN");
+  };
+
   render() {
     return (
       <View
@@ -23,22 +51,31 @@ export default class Main extends Component {
           styles.flexAlignStretch
         ]}
       >
-        <MainScreenComponents.NavIcon text="Diagnostics">
+        <MainScreenComponents.NavIcon
+          text="Diagnostics"
+          onPress={this.goDiagnostics}
+        >
           <Icons.Diagnostics />
         </MainScreenComponents.NavIcon>
-        <MainScreenComponents.NavIcon text="ESN">
+        <MainScreenComponents.NavIcon text="ESN" onPress={this.goESN}>
           <Icons.ESN />
         </MainScreenComponents.NavIcon>
-        <MainScreenComponents.NavIcon text="GPS">
+        <MainScreenComponents.NavIcon text="GPS" onPress={this.goGPS}>
           <Icons.GPS />
         </MainScreenComponents.NavIcon>
-        <MainScreenComponents.NavIcon text="Hours of Service">
+        <MainScreenComponents.NavIcon
+          text="Hours of Service"
+          onPress={this.goTachometer}
+        >
           <Icons.Tachometer />
         </MainScreenComponents.NavIcon>
-        <MainScreenComponents.NavIcon text="Odometer">
+        <MainScreenComponents.NavIcon
+          text="Odometer"
+          onPress={this.goOdometer}
+        >
           <Icons.Odometer />
         </MainScreenComponents.NavIcon>
-        <MainScreenComponents.NavIcon text="VIN">
+        <MainScreenComponents.NavIcon text="VIN" onPress={this.goVIN}>
           <Icons.VIN />
         </MainScreenComponents.NavIcon>
       </View>
