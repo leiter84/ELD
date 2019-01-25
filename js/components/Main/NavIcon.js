@@ -14,11 +14,10 @@ export default class NavIcon extends Component {
     return (
       <View
         style={[
-          styles.padding(10),
           styles.flexColumn,
           styles.flexCenter,
           styles.flexJustifyAround,
-          styles.box(150)
+          styles.box(130)
         ]}
       >
         {this.props.children}

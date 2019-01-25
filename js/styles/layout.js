@@ -20,6 +20,10 @@ const flexAlignStart = {
   alignItems: "flex-start"
 };
 
+const flexAlignStretch = {
+  alignContent: "stretch"
+};
+
 const flexCenter = {
   justifyContent: "center",
   alignItems: "center"
@@ -43,6 +47,7 @@ export {
   flexItem,
   flexAlignCenter,
   flexAlignStart,
+  flexAlignStretch,
   flexCenter,
   flexJustifyBetween,
   flexJustifyAround,

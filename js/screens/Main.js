@@ -20,7 +20,7 @@ export default class Main extends Component {
           styles.flexRow,
           styles.flexWrap,
           styles.flexCenter,
-          styles.padding(20)
+          styles.flexAlignStretch
         ]}
       >
         <MainScreenComponents.NavIcon text="Diagnostics">
