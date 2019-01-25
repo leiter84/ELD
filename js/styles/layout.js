@@ -29,6 +29,10 @@ const flexJustifyBetween = {
   justifyContent: "space-between"
 };
 
+const flexJustifyAround = {
+  justifyContent: "space-around"
+};
+
 const flexWrap = {
   flexWrap: "wrap"
 };
@@ -41,5 +45,6 @@ export {
   flexAlignStart,
   flexCenter,
   flexJustifyBetween,
+  flexJustifyAround,
   flexWrap
 };
