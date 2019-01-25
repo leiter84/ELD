@@ -5,10 +5,21 @@ import {
 
 import Main from "./Main";
 
+import * as Colors from "../styles/colorTheme";
+
+const navigationOptions = {
+  headerStyle: {
+    backgroundColor: Colors.themeDarker,
+    color: Colors.themeLighter
+  },
+  headerTintColor: Colors.themeLighter
+};
+
 const MainStack = createStackNavigator(
   {
     Main: {
-      screen: Main
+      screen: Main,
+      navigationOptions
     }
   },
   {
