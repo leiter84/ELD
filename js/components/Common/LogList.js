@@ -11,18 +11,25 @@ export default class LogList extends Component {
 
   _renderItem = ({ item }) => {
     return (
-      <Text style={[styles.fontLog, styles.fontDarker]}>
-        Logging information {item.text}
-      </Text>
+      <View
+        style={[
+          styles.padding(10),
+          styles.borderDarker,
+          { borderStyle: "dashed", borderWidth: 1 }
+        ]}
+      >
+        <Text style={[styles.fontLog, styles.fontDarker]}>
+          Logging information {item.text}
+        </Text>
+      </View>
     );
   };
 
   render() {
-    console.log(this.props.data);
     return (
-      <View style={[styles.flexAlignSelfStretch]}>
+      <View style={[styles.flexItem, styles.flexAlignSelfStretch]}>
         <View style={[styles.bgDarker, styles.padding(10)]}>
-          <Text style={[styles.fontLighter]}>Logs from TGW</Text>
+          <Text style={[styles.fontLighter]}>Logs from TGW: </Text>
         </View>
 
         <FlatList
