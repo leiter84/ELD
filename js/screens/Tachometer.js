@@ -1,5 +1,8 @@
 import React, { Component } from "react";
-import { View, Text } from "react-native";
+import { View } from "react-native";
+
+import * as Common from "../components/Common";
+import { styles } from "../styles";
 
 export default class Tachometer extends Component {
   static navigationOptions = () => {
@@ -10,8 +13,8 @@ export default class Tachometer extends Component {
 
   render() {
     return (
-      <View>
-        <Text>content goes here</Text>
+      <View style={[styles.flexItem, styles.flexAlignCenter]}>
+        <Common.SyncButton />
       </View>
     );
   }
