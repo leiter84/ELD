@@ -3,14 +3,12 @@ import * as Layouts from "./layout";
 import * as Spacing from "./spacing";
 import * as Sizing from "./sizing";
 import * as Fonts from "./fonts";
-/*import * as Borders from "./borders";
-import * as Backgrounds from "./backgrounds"; */
+import * as Colors from "./colors";
 
 export const styles = StyleSheet.create({
   ...Layouts,
   ...Spacing,
   ...Sizing,
-  ...Fonts
-  /*...Borders,
-  ...Backgrounds */
+  ...Fonts,
+  ...Colors
 });

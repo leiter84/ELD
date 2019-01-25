@@ -24,6 +24,10 @@ const flexAlignStretch = {
   alignContent: "stretch"
 };
 
+const flexAlignSelfStretch = {
+  alignSelf: "stretch"
+};
+
 const flexCenter = {
   justifyContent: "center",
   alignItems: "center"
@@ -48,6 +52,7 @@ export {
   flexAlignCenter,
   flexAlignStart,
   flexAlignStretch,
+  flexAlignSelfStretch,
   flexCenter,
   flexJustifyBetween,
   flexJustifyAround,

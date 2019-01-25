@@ -35,5 +35,10 @@
     "hooks": {
       "pre-commit": "yarn lint"
     }
+  },
+  "rnpm": {
+    "assets": [
+      "./assets/fonts/"
+    ]
   }
 }

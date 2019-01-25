@@ -1,3 +1,4 @@
 import SyncButton from "./SyncButton";
+import LogList from "./LogList";
 
-export { SyncButton };
+export { SyncButton, LogList };

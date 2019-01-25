@@ -16,8 +16,19 @@ const fontBold = {
   fontWeight: "700"
 };
 
+const fontLog = {
+  fontFamily: "Courier"
+};
+
 const fontBigger = {
   fontSize: 16
 };
 
-export { fontPrimary, fontDarker, fontLighter, fontBold, fontBigger };
+export {
+  fontPrimary,
+  fontDarker,
+  fontLighter,
+  fontBold,
+  fontBigger,
+  fontLog
+};
