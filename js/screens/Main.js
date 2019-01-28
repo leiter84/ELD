@@ -13,7 +13,9 @@ export default class Main extends Component {
   };
 
   goScreen = screenName => {
-    this.props.navigation.navigate(screenName);
+    this.props.navigation.navigate(screenName, {
+      callAPI: this.callAPI.bind(this)
+    });
   };
 
   goDiagnostics = () => {
@@ -38,6 +40,12 @@ export default class Main extends Component {
 
   goVIN = () => {
     this.goScreen("VIN");
+  };
+
+  callAPI = async () => {
+    return new Promise(resolve => {
+      setTimeout(() => resolve({}), 5000);
+    });
   };
 
   render() {

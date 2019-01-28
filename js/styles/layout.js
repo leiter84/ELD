@@ -41,6 +41,10 @@ const flexJustifyAround = {
   justifyContent: "space-around"
 };
 
+const flexJustifyEvenly = {
+  justifyContent: "space-evenly"
+};
+
 const flexWrap = {
   flexWrap: "wrap"
 };
@@ -56,5 +60,6 @@ export {
   flexCenter,
   flexJustifyBetween,
   flexJustifyAround,
+  flexJustifyEvenly,
   flexWrap
 };

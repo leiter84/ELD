@@ -14,9 +14,11 @@ export default class Diagnostics extends Component {
   };
 
   render() {
+    const { callAPI } = this.props.navigation.state.params;
+
     return (
       <View style={[styles.flexItem, styles.flexAlignCenter]}>
-        <Common.SyncButton />
+        <Common.SyncButton onPress={callAPI} />
 
         <Common.LogList data={data} />
       </View>
