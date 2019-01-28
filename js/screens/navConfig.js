@@ -19,18 +19,18 @@ const navigationOptions = {
 const MainStack = createStackNavigator(
   {
     Main: {
-      screen: Main,
-      navigationOptions
+      screen: Main
     },
-    Diagnostics: { screen: Screens.Diagnostics, navigationOptions },
-    ESN: { screen: Screens.ESN, navigationOptions },
-    GPS: { screen: Screens.GPS, navigationOptions },
-    Tachometer: { screen: Screens.Tachometer, navigationOptions },
-    Odometer: { screen: Screens.Odometer, navigationOptions },
-    VIN: { screen: Screens.VIN, navigationOptions }
+    Diagnostics: { screen: Screens.Diagnostics },
+    ESN: { screen: Screens.ESN },
+    GPS: { screen: Screens.GPS },
+    Tachometer: { screen: Screens.Tachometer },
+    Odometer: { screen: Screens.Odometer },
+    VIN: { screen: Screens.VIN }
   },
   {
-    initialRouteName: "Main"
+    initialRouteName: "Main",
+    defaultNavigationOptions: navigationOptions
   }
 );
 
