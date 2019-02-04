@@ -26,7 +26,8 @@ const MainStack = createStackNavigator(
     GPS: { screen: Screens.GPS },
     Tachometer: { screen: Screens.Tachometer },
     Odometer: { screen: Screens.Odometer },
-    VIN: { screen: Screens.VIN }
+    VIN: { screen: Screens.VIN },
+    Settings: { screen: Screens.Settings }
   },
   {
     initialRouteName: "Main",

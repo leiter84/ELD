@@ -1,56 +1,88 @@
-import { observable, action } from "mobx";
+import { observable, action, computed } from "mobx";
 
 class AppState {
   @observable
   baseUrl = "https://eld-backend.azurewebsites.net/api/eld/";
 
   @observable
-  diagnosticLogs = [];
+  _diagnosticLogs = [];
 
   @observable
-  esnLogs = [];
+  _esnLogs = [];
 
   @observable
-  gpsLogs = [];
+  _gpsLogs = [];
 
   @observable
-  tachometerLogs = [];
+  _tachometerLogs = [];
 
   @observable
-  odometerLogs = [];
+  _odometerLogs = [];
 
   @observable
-  vinLogs = [];
+  _vinLogs = [];
 
   @action
   addNewDiagnosticLog = log => {
-    this.diagnosticLogs.push(log);
+    this._diagnosticLogs.push(log);
   };
 
   @action
   addNewEsnLog = log => {
-    this.esnLogs.push(log);
+    this._esnLogs.push(log);
   };
 
   @action
   addNewGpsLog = log => {
-    this.gpsLogs.push(log);
+    this._gpsLogs.push(log);
   };
 
   @action
   addNewTachometerLog = log => {
-    this.tachometerLogs.push(log);
+    this._tachometerLogs.push(log);
   };
 
   @action
   addNewOdometerLog = log => {
-    this.odometerLogs.push(log);
+    this._odometerLogs.push(log);
   };
 
   @action
   addNewVinLog = log => {
-    this.vinLogs.push(log);
+    this._vinLogs.push(log);
   };
+
+  sortingPredicate = (a, b) => {
+    return a.calledAt > b.calledAt
+      ? -1
+      : a.calledAt < b.calledAt
+      ? 1
+      : 0;
+  };
+
+  @computed get diagnosticLogs() {
+    return this._diagnosticLogs.sort(this.sortingPredicate);
+  }
+
+  @computed get esnLogs() {
+    return this._esnLogs.sort(this.sortingPredicate);
+  }
+
+  @computed get gpsLogs() {
+    return this._gpsLogs.sort(this.sortingPredicate);
+  }
+
+  @computed get tachometerLogs() {
+    return this._tachometerLogs.sort(this.sortingPredicate);
+  }
+
+  @computed get odometerLogs() {
+    return this._odometerLogs.sort(this.sortingPredicate);
+  }
+
+  @computed get vinLogs() {
+    return this._vinLogs.sort(this.sortingPredicate);
+  }
 }
 
 export default new AppState();

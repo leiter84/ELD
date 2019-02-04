@@ -5,15 +5,17 @@ import axios from "axios";
 import { inject, observer } from "mobx-react";
 
 import * as MainScreenComponents from "../components/Main";
+import * as CommonComponents from "../components/Common";
 import * as Icons from "../components/Icons";
 import { styles } from "../styles";
 
 @inject("appState")
 @observer
 class Main extends Component {
-  static navigationOptions = () => {
+  static navigationOptions = ({ navigation }) => {
     return {
-      title: "ELD"
+      title: "ELD",
+      headerLeft: <CommonComponents.Settings navigation={navigation} />
     };
   };
 
@@ -21,45 +23,53 @@ class Main extends Component {
     appState: PropTypes.any
   };
 
+  getWithTimestamp = inputData => {
+    const now = new Date();
+    return {
+      ...inputData,
+      calledAt: now.toISOString()
+    };
+  };
+
   getDiagnosticsLog = async () => {
     const result = await axios.get("/diagnostic_service_state");
 
-    const data = { ...result.data, time: Date.now() };
+    const data = this.getWithTimestamp(result.data);
     this.props.appState.addNewDiagnosticLog(data);
   };
 
   getEsnLog = async () => {
     const result = await axios.get("/esn");
 
-    const data = { ...result.data, time: Date.now() };
+    const data = this.getWithTimestamp(result.data);
     this.props.appState.addNewEsnLog(data);
   };
 
   getGpsLog = async () => {
     const result = await axios.get("/gps");
 
-    const data = { ...result.data, time: Date.now() };
+    const data = this.getWithTimestamp(result.data);
     this.props.appState.addNewGpsLog(data);
   };
 
   getTachometerLog = async () => {
     const result = await axios.get("/hours_of_service");
 
-    const data = { ...result.data, time: Date.now() };
+    const data = this.getWithTimestamp(result.data);
     this.props.appState.addNewTachometerLog(data);
   };
 
   getOdometerLog = async () => {
     const result = await axios.get("/odometer");
 
-    const data = { ...result.data, time: Date.now() };
+    const data = this.getWithTimestamp(result.data);
     this.props.appState.addNewOdometerLog(data);
   };
 
   getVinLog = async () => {
     const result = await axios.get("/vin");
 
-    const data = { ...result.data, time: Date.now() };
+    const data = this.getWithTimestamp(result.data);
     this.props.appState.addNewVinLog(data);
   };
 

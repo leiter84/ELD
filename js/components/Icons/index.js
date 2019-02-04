@@ -5,5 +5,15 @@ import Odometer from "./Odometer";
 import Tachometer from "./Tachometer";
 import VIN from "./VIN";
 import Sync from "./Sync";
+import Settings from "./Settings";
 
-export { Diagnostics, ESN, GPS, Odometer, Tachometer, VIN, Sync };
+export {
+  Diagnostics,
+  ESN,
+  GPS,
+  Odometer,
+  Tachometer,
+  VIN,
+  Sync,
+  Settings
+};

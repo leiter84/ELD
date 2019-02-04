@@ -11,21 +11,26 @@ export default class LogList extends Component {
 
   _renderProps = item => {
     return Object.keys(item).map(key => (
-      <View style={[styles.flexRow]} key={key}>
+      <View style={[styles.flexRow, styles.flexWrap]} key={key}>
         <Text
           style={[styles.fontLog, styles.fontDarker, styles.flexItem]}
         >
           {key}:
         </Text>
-        <Text
-          style={[
-            styles.fontLog,
-            styles.fontDarker,
-            styles.flexItem2
-          ]}
-        >
-          {item[key]}
-        </Text>
+
+        {typeof item[key] === "object" ? (
+          <View>{this._renderProps(item[key])}</View>
+        ) : (
+          <Text
+            style={[
+              styles.fontLog,
+              styles.fontDarker,
+              styles.flexItem2
+            ]}
+          >
+            {item[key]}
+          </Text>
+        )}
       </View>
     ));
   };
