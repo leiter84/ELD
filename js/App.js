@@ -1,8 +1,18 @@
 import React, { Component } from "react";
+import { Provider, observer } from "mobx-react/native";
 import ScreenNav from "./screens/navConfig";
 
-export default class App extends Component {
+import AppState from "./data/AppState";
+
+@observer
+class App extends Component {
   render() {
-    return <ScreenNav />;
+    return (
+      <Provider appState={AppState}>
+        <ScreenNav />
+      </Provider>
+    );
   }
 }
+
+export default App;

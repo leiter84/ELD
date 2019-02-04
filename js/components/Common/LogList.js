@@ -9,6 +9,27 @@ export default class LogList extends Component {
     data: PropTypes.array
   };
 
+  _renderProps = item => {
+    return Object.keys(item).map(key => (
+      <View style={[styles.flexRow]} key={key}>
+        <Text
+          style={[styles.fontLog, styles.fontDarker, styles.flexItem]}
+        >
+          {key}:
+        </Text>
+        <Text
+          style={[
+            styles.fontLog,
+            styles.fontDarker,
+            styles.flexItem2
+          ]}
+        >
+          {item[key]}
+        </Text>
+      </View>
+    ));
+  };
+
   _renderItem = ({ item }) => {
     return (
       <View
@@ -18,9 +39,7 @@ export default class LogList extends Component {
           { borderStyle: "dashed", borderWidth: 1 }
         ]}
       >
-        <Text style={[styles.fontLog, styles.fontDarker]}>
-          Logging information {item.text}
-        </Text>
+        {this._renderProps(item)}
       </View>
     );
   };
@@ -34,7 +53,7 @@ export default class LogList extends Component {
 
         <FlatList
           data={this.props.data}
-          keyExtractor={item => String(item.id)}
+          keyExtractor={(item, index) => String(index)}
           renderItem={this._renderItem}
         />
       </View>
