@@ -7,25 +7,27 @@ import {
   ActivityIndicator
 } from "react-native";
 
-import { observer } from "mobx-react/native";
+import { inject, observer } from "mobx-react/native";
+import { observable } from "mobx";
 
 import * as Icons from "../Icons";
 import { styles } from "../../styles";
 
+@inject("appState")
 @observer
 class SyncButton extends Component {
   static propTypes = {
+    appState: PropTypes.any,
     onPress: PropTypes.func.isRequired
   };
 
-  state = {
-    isFetchingData: false
-  };
+  @observable
+  isFetchingData = false;
 
   _onSync = async () => {
-    await this.setState({ isFetchingData: true });
+    this.isFetchingData = true;
     await this.props.onPress();
-    this.setState({ isFetchingData: false });
+    this.isFetchingData = false;
   };
 
   render() {
@@ -33,11 +35,15 @@ class SyncButton extends Component {
       styles.flexRow,
       styles.flexCenter,
       styles.flexJustifyEvenly,
-      styles.box(180, 100)
+      styles.paddingV20
     ];
-    const textStyles = [styles.fontDarker, styles.fontBigger];
+    const textStyles = [
+      styles.fontDarker,
+      styles.fontBigger,
+      styles.paddingH20
+    ];
 
-    return this.state.isFetchingData === true ? (
+    return this.isFetchingData === true ? (
       <View style={boxStyles}>
         <ActivityIndicator
           size="large"
@@ -45,11 +51,21 @@ class SyncButton extends Component {
         />
         <Text style={textStyles}>Syncing with TGW</Text>
       </View>
-    ) : (
+    ) : this.props.appState.connectionAvailable === true ? (
       <TouchableOpacity style={boxStyles} onPress={this._onSync}>
         <Icons.Sync />
         <Text style={textStyles}>Sync data</Text>
       </TouchableOpacity>
+    ) : (
+      <View style={boxStyles}>
+        <Icons.NoConnection />
+        <Text style={[styles.fontNeutral]}>
+          Check you connection or default endpoint
+        </Text>
+        <TouchableOpacity onPress={this._onSync}>
+          <Text style={textStyles}>Retry</Text>
+        </TouchableOpacity>
+      </View>
     );
   }
 }
