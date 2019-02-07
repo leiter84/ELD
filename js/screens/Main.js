@@ -37,9 +37,8 @@ class Main extends Component {
         callEnd: callEnd.toISOString()
       };
     } catch (error) {
-      if (error.message.includes("404")) {
-        this.props.appState.setNoConnection();
-      }
+      this.props.appState.setNoConnection();
+
       return undefined;
     }
   };
