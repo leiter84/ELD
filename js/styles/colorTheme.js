@@ -1,5 +1,6 @@
 const themePrimary = "#0078d4";
-const themeDarker = "#004578"; // black 10%
-const themeLighter = "#f8f8f8"; //fireBrick
+const themeDarker = "#004578";
+const themeLighter = "#f8f8f8";
+const neutralPrimary = "#333333";
 
-export { themePrimary, themeDarker, themeLighter };
+export { themePrimary, themeDarker, themeLighter, neutralPrimary };

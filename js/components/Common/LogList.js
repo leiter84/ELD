@@ -10,29 +10,39 @@ export default class LogList extends Component {
   };
 
   _renderProps = item => {
-    return Object.keys(item).map(key => (
-      <View style={[styles.flexRow, styles.flexWrap]} key={key}>
-        <Text
-          style={[styles.fontLog, styles.fontDarker, styles.flexItem]}
-        >
-          {key}:
-        </Text>
-
-        {typeof item[key] === "object" ? (
-          <View>{this._renderProps(item[key])}</View>
-        ) : (
+    return Object.keys(item).map(key => {
+      const value =
+        typeof item[key] === "boolean"
+          ? String(item[key])
+          : item[key];
+      return (
+        <View style={[styles.flexRow, styles.flexWrap]} key={key}>
           <Text
             style={[
               styles.fontLog,
               styles.fontDarker,
-              styles.flexItem2
+              styles.flexItem
             ]}
           >
-            {item[key]}
+            {key}:
           </Text>
-        )}
-      </View>
-    ));
+
+          {typeof item[key] === "object" ? (
+            <View>{this._renderProps(item[key])}</View>
+          ) : (
+            <Text
+              style={[
+                styles.fontLog,
+                styles.fontDarker,
+                styles.flexItem2
+              ]}
+            >
+              {value}
+            </Text>
+          )}
+        </View>
+      );
+    });
   };
 
   _renderItem = ({ item }) => {
@@ -41,7 +51,7 @@ export default class LogList extends Component {
         style={[
           styles.padding(10),
           styles.borderDarker,
-          { borderStyle: "dashed", borderWidth: 1 }
+          styles.borderBottom
         ]}
       >
         {this._renderProps(item)}

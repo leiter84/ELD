@@ -15,7 +15,9 @@ class Main extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: "ELD",
-      headerLeft: <CommonComponents.Settings navigation={navigation} />
+      headerLeft: (
+        <CommonComponents.Settings navigation={navigation} />
+      )
     };
   };
 
@@ -23,54 +25,73 @@ class Main extends Component {
     appState: PropTypes.any
   };
 
-  getWithTimestamp = inputData => {
-    const now = new Date();
-    return {
-      ...inputData,
-      calledAt: now.toISOString()
-    };
+  getWithTimestamps = async endpoint => {
+    try {
+      const callStart = new Date();
+      const result = await axios.get(endpoint);
+      const callEnd = new Date();
+
+      return {
+        ...result.data,
+        callStart: callStart.toISOString(),
+        callEnd: callEnd.toISOString()
+      };
+    } catch (error) {
+      if (error.message.includes("404")) {
+        this.props.appState.setNoConnection();
+      }
+      return undefined;
+    }
   };
 
   getDiagnosticsLog = async () => {
-    const result = await axios.get("/diagnostic_service_state");
-
-    const data = this.getWithTimestamp(result.data);
-    this.props.appState.addNewDiagnosticLog(data);
+    const data = await this.getWithTimestamps(
+      "/diagnostic_service_state"
+    );
+    if (data) {
+      this.props.appState.addNewDiagnosticLog(data);
+      this.props.appState.setConnection();
+    }
   };
 
   getEsnLog = async () => {
-    const result = await axios.get("/esn");
-
-    const data = this.getWithTimestamp(result.data);
-    this.props.appState.addNewEsnLog(data);
+    const data = await this.getWithTimestamps("/esn");
+    if (data) {
+      this.props.appState.addNewEsnLog(data);
+      this.props.appState.setConnection();
+    }
   };
 
   getGpsLog = async () => {
-    const result = await axios.get("/gps");
-
-    const data = this.getWithTimestamp(result.data);
-    this.props.appState.addNewGpsLog(data);
+    const data = await this.getWithTimestamps("/gps");
+    if (data) {
+      this.props.appState.addNewGpsLog(data);
+      this.props.appState.setConnection();
+    }
   };
 
   getTachometerLog = async () => {
-    const result = await axios.get("/hours_of_service");
-
-    const data = this.getWithTimestamp(result.data);
-    this.props.appState.addNewTachometerLog(data);
+    const data = await this.getWithTimestamps("/hours_of_service");
+    if (data) {
+      this.props.appState.addNewTachometerLog(data);
+      this.props.appState.setConnection();
+    }
   };
 
   getOdometerLog = async () => {
-    const result = await axios.get("/odometer");
-
-    const data = this.getWithTimestamp(result.data);
-    this.props.appState.addNewOdometerLog(data);
+    const data = await this.getWithTimestamps("/odometer");
+    if (data) {
+      this.props.appState.addNewOdometerLog(data);
+      this.props.appState.setConnection();
+    }
   };
 
   getVinLog = async () => {
-    const result = await axios.get("/vin");
-
-    const data = this.getWithTimestamp(result.data);
-    this.props.appState.addNewVinLog(data);
+    const data = await this.getWithTimestamps("/vin");
+    if (data) {
+      this.props.appState.addNewVinLog(data);
+      this.props.appState.setConnection();
+    }
   };
 
   goScreen = (screenName, apiCall, logs) => {
@@ -104,7 +125,7 @@ class Main extends Component {
     this.goScreen("VIN", this.getVinLog);
   };
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     axios.defaults.baseURL = this.props.appState.baseUrl;
   };
 

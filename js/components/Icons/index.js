@@ -6,6 +6,7 @@ import Tachometer from "./Tachometer";
 import VIN from "./VIN";
 import Sync from "./Sync";
 import Settings from "./Settings";
+import NoConnection from "./NoConnection";
 
 export {
   Diagnostics,
@@ -15,5 +16,6 @@ export {
   Tachometer,
   VIN,
   Sync,
-  Settings
+  Settings,
+  NoConnection
 };

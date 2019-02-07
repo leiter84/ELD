@@ -12,6 +12,10 @@ const fontLighter = {
   color: Colors.themeLighter
 };
 
+const fontNeutralPrimary = {
+  color: Colors.themeLighter
+};
+
 const fontBold = {
   fontWeight: "700"
 };
@@ -28,6 +32,7 @@ export {
   fontPrimary,
   fontDarker,
   fontLighter,
+  fontNeutralPrimary,
   fontBold,
   fontBigger,
   fontLog

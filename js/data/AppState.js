@@ -1,8 +1,11 @@
 import { observable, action, computed } from "mobx";
-
+import axios from "axios";
 class AppState {
   @observable
   baseUrl = "https://eld-backend.azurewebsites.net/api/eld/";
+
+  @observable
+  connectionAvailable = true;
 
   @observable
   _diagnosticLogs = [];
@@ -23,8 +26,24 @@ class AppState {
   _vinLogs = [];
 
   @action
+  updateBaseUrl = url => {
+    this.baseUrl = url;
+    axios.defaults.baseURL = url;
+  };
+
+  @action
   addNewDiagnosticLog = log => {
     this._diagnosticLogs.push(log);
+  };
+
+  @action
+  setNoConnection = () => {
+    this.connectionAvailable = false;
+  };
+
+  @action
+  setConnection = () => {
+    this.connectionAvailable = true;
   };
 
   @action
@@ -61,27 +80,27 @@ class AppState {
   };
 
   @computed get diagnosticLogs() {
-    return this._diagnosticLogs.sort(this.sortingPredicate);
+    return this._diagnosticLogs.slice().sort(this.sortingPredicate);
   }
 
   @computed get esnLogs() {
-    return this._esnLogs.sort(this.sortingPredicate);
+    return this._esnLogs.slice().sort(this.sortingPredicate);
   }
 
   @computed get gpsLogs() {
-    return this._gpsLogs.sort(this.sortingPredicate);
+    return this._gpsLogs.slice().sort(this.sortingPredicate);
   }
 
   @computed get tachometerLogs() {
-    return this._tachometerLogs.sort(this.sortingPredicate);
+    return this._tachometerLogs.slice().sort(this.sortingPredicate);
   }
 
   @computed get odometerLogs() {
-    return this._odometerLogs.sort(this.sortingPredicate);
+    return this._odometerLogs.slice().sort(this.sortingPredicate);
   }
 
   @computed get vinLogs() {
-    return this._vinLogs.sort(this.sortingPredicate);
+    return this._vinLogs.slice().sort(this.sortingPredicate);
   }
 }
 
