@@ -5,7 +5,8 @@
   "scripts": {
     "lint": "node node_modules/.bin/eslint js  --fix",
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "jest",
+    "build": "/bin/sh buildApk.sh"
   },
   "dependencies": {
     "axios": "^0.18.0",
