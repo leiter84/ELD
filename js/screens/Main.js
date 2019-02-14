@@ -93,6 +93,14 @@ class Main extends Component {
     }
   };
 
+  getChassisLog = async () => {
+    const data = await this.getWithTimestamps("/chassisid");
+    if (data) {
+      this.props.appState.addNewChassisLog(data);
+      this.props.appState.setConnection();
+    }
+  };
+
   goScreen = (screenName, apiCall, logs) => {
     this.props.navigation.navigate(screenName, {
       callAPI: apiCall,
@@ -122,6 +130,10 @@ class Main extends Component {
 
   goVIN = () => {
     this.goScreen("VIN", this.getVinLog);
+  };
+
+  goChassis = () => {
+    this.goScreen("Chassis", this.getChassisLog);
   };
 
   componentDidMount = async () => {
@@ -166,6 +178,12 @@ class Main extends Component {
         <MainScreenComponents.NavIcon text="VIN" onPress={this.goVIN}>
           <Icons.VIN />
         </MainScreenComponents.NavIcon>
+        {/* <MainScreenComponents.NavIcon
+          text="Chassis"
+          onPress={this.goChassis}
+        >
+          <Icons.Chassis />
+        </MainScreenComponents.NavIcon> */}
       </View>
     );
   }

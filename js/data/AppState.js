@@ -25,6 +25,9 @@ class AppState {
   @observable
   _vinLogs = [];
 
+  @observable
+  _chassisLogs = [];
+
   @action
   updateBaseUrl = url => {
     this.baseUrl = url;
@@ -71,6 +74,11 @@ class AppState {
     this._vinLogs.push(log);
   };
 
+  @action
+  addNewChassisLog = log => {
+    this._chassisLogs.push(log);
+  };
+
   sortingPredicate = (a, b) => {
     return a.calledAt > b.calledAt
       ? -1
@@ -101,6 +109,10 @@ class AppState {
 
   @computed get vinLogs() {
     return this._vinLogs.slice().sort(this.sortingPredicate);
+  }
+
+  @computed get chassisLogs() {
+    return this._chassisLogs.slice().sort(this.sortingPredicate);
   }
 }
 

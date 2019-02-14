@@ -60,7 +60,7 @@ class SyncButton extends Component {
       <View style={boxStyles}>
         <Icons.NoConnection />
         <Text style={[styles.fontNeutral]}>
-          Check you connection or default endpoint
+          Check your connection or default endpoint
         </Text>
         <TouchableOpacity onPress={this._onSync}>
           <Text style={textStyles}>Retry</Text>

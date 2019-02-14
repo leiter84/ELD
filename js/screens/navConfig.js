@@ -27,7 +27,8 @@ const MainStack = createStackNavigator(
     Tachometer: { screen: Screens.Tachometer },
     Odometer: { screen: Screens.Odometer },
     VIN: { screen: Screens.VIN },
-    Settings: { screen: Screens.Settings }
+    Settings: { screen: Screens.Settings },
+    Chassis: { screen: Screens.Chassis }
   },
   {
     initialRouteName: "Main",

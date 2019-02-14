@@ -7,6 +7,7 @@ import VIN from "./VIN";
 import Sync from "./Sync";
 import Settings from "./Settings";
 import NoConnection from "./NoConnection";
+import Chassis from "./Chassis";
 
 export {
   Diagnostics,
@@ -17,5 +18,6 @@ export {
   VIN,
   Sync,
   Settings,
-  NoConnection
+  NoConnection,
+  Chassis
 };

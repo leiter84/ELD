@@ -3,7 +3,7 @@ import Icon from "react-native-vector-icons/FontAwesome5";
 
 import * as Colors from "../../styles/colorTheme";
 
-export default class ESN extends Component {
+export default class Tachometer extends Component {
   render() {
     return (
       <Icon
