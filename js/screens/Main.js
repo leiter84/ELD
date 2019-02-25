@@ -178,12 +178,12 @@ class Main extends Component {
         <MainScreenComponents.NavIcon text="VIN" onPress={this.goVIN}>
           <Icons.VIN />
         </MainScreenComponents.NavIcon>
-        {/* <MainScreenComponents.NavIcon
+        <MainScreenComponents.NavIcon
           text="Chassis"
           onPress={this.goChassis}
         >
           <Icons.Chassis />
-        </MainScreenComponents.NavIcon> */}
+        </MainScreenComponents.NavIcon>
       </View>
     );
   }
