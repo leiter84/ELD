@@ -11,6 +11,14 @@ const padding20 = {
   ...paddingV20
 };
 
+const paddingInput = {
+  paddingVertical: 10
+};
+
+const paddingListItem = {
+  paddingVertical: 5
+};
+
 const padding = value => {
   return {
     paddingVertical: value,
@@ -18,4 +26,11 @@ const padding = value => {
   };
 };
 
-export { paddingH20, paddingV20, padding20, padding };
+export {
+  paddingH20,
+  paddingV20,
+  padding20,
+  padding,
+  paddingInput,
+  paddingListItem
+};

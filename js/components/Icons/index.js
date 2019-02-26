@@ -8,6 +8,7 @@ import Sync from "./Sync";
 import Settings from "./Settings";
 import NoConnection from "./NoConnection";
 import Chassis from "./Chassis";
+import WiFi from "./WiFi";
 
 export {
   Diagnostics,
@@ -19,5 +20,6 @@ export {
   Sync,
   Settings,
   NoConnection,
-  Chassis
+  Chassis,
+  WiFi
 };

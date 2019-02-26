@@ -13,7 +13,15 @@ const fontLighter = {
 };
 
 const fontNeutralPrimary = {
-  color: Colors.themeLighter
+  color: Colors.neutralPrimary
+};
+
+const fontNeutralSecondary = {
+  color: Colors.neutralSecondary
+};
+
+const fontRedDark = {
+  color: Colors.redDark
 };
 
 const fontBold = {
@@ -28,12 +36,19 @@ const fontBigger = {
   fontSize: 16
 };
 
+const fontBiggest = {
+  fontSize: 20
+};
+
 export {
   fontPrimary,
   fontDarker,
   fontLighter,
   fontNeutralPrimary,
+  fontNeutralSecondary,
   fontBold,
   fontBigger,
-  fontLog
+  fontBiggest,
+  fontLog,
+  fontRedDark
 };

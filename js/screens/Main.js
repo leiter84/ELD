@@ -14,7 +14,7 @@ import { styles } from "../styles";
 class Main extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: "ELD",
+      title: "ELD Diagnostic",
       headerLeft: (
         <CommonComponents.Settings navigation={navigation} />
       )
