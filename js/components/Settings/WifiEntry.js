@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Text, View } from "react-native";
 
 import { styles } from "../../styles";
-import * as Icons from "../components/Icons";
+import * as Icons from "../Icons";
 
 export default class WifiEntry extends Component {
   static propTypes = {
