@@ -9,6 +9,7 @@ import Settings from "./Settings";
 import NoConnection from "./NoConnection";
 import Chassis from "./Chassis";
 import WiFi from "./WiFi";
+import Lock from "./Lock";
 
 export {
   Diagnostics,
@@ -21,5 +22,6 @@ export {
   Settings,
   NoConnection,
   Chassis,
-  WiFi
+  WiFi,
+  Lock
 };

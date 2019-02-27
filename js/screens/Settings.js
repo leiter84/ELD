@@ -13,7 +13,7 @@ import { inject, observer } from "mobx-react";
 
 import { styles } from "../styles";
 import * as Common from "../components/Common";
-import * as Icons from "../components/Icons";
+import * as Settings from "../components/Settings";
 
 @inject("appState")
 @observer
@@ -111,29 +111,7 @@ class Diagnostics extends Component {
                 data={this.state.wifis}
                 keyExtractor={item => item.SSID}
                 renderItem={({ item }) => (
-                  <View
-                    style={[
-                      styles.paddingListItem,
-                      styles.flexItem,
-                      styles.flexRow,
-                      styles.flexAlignCenter
-                    ]}
-                  >
-                    <Icons.WiFi />
-                    <View style={[{ paddingHorizontal: 5, flex: 8 }]}>
-                      <Text style={[styles.fontBigger]}>
-                        {item.SSID}
-                      </Text>
-                      <Text>{item.BSSID}</Text>
-                      <Text style={[styles.fontRedDark]}>
-                        {item.capabilities
-                          .replace(/]\[/g, ", ")
-                          .replace(/\[/g, "")
-                          .replace(/]/g, "")}
-                      </Text>
-                    </View>
-                    <Text>{-Number(item.level)}</Text>
-                  </View>
+                  <Settings.WifiEntry item={item} />
                 )}
                 ListEmptyComponent={() => (
                   <Text style={styles.noData}>No net available</Text>
