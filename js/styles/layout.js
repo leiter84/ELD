@@ -20,6 +20,10 @@ const flexAlignStart = {
   alignItems: "flex-start"
 };
 
+const flexAlignEnd = {
+  alignItems: "flex-end"
+};
+
 const flexAlignStretch = {
   alignContent: "stretch"
 };
@@ -55,6 +59,7 @@ export {
   flexItem,
   flexAlignCenter,
   flexAlignStart,
+  flexAlignEnd,
   flexAlignStretch,
   flexAlignSelfStretch,
   flexCenter,
