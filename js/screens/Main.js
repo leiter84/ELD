@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import { View } from "react-native";
 import PropTypes from "prop-types";
-import axios from "axios";
 import { inject, observer } from "mobx-react";
 
 import * as MainScreenComponents from "../components/Main";
 import * as CommonComponents from "../components/Common";
 import * as Icons from "../components/Icons";
 import { styles } from "../styles";
+
+import digestAuthRequest from "../services/digestAuthRequest";
 
 @inject("appState")
 @observer
@@ -25,22 +26,38 @@ class Main extends Component {
     appState: PropTypes.any
   };
 
-  getWithTimestamps = async endpoint => {
-    try {
+  getAuthDigestClient = path => {
+    const { baseUrl, username, password } = this.props.appState;
+    return new digestAuthRequest(
+      "GET",
+      `${baseUrl}${path}`,
+      username,
+      password
+    );
+  };
+
+  getWithTimestamps = async path => {
+    const getRequestClient = this.getAuthDigestClient(path);
+
+    return new Promise(resolve => {
       const callStart = new Date();
-      const result = await axios.get(endpoint);
-      const callEnd = new Date();
-
-      return {
-        ...result.data,
-        callStart: callStart.toISOString(),
-        callEnd: callEnd.toISOString()
-      };
-    } catch (error) {
-      this.props.appState.setNoConnection();
-
-      return undefined;
-    }
+      getRequestClient.request(
+        data => {
+          const callEnd = new Date();
+          console.log(data);
+          resolve({
+            ...data,
+            callStart: callStart.toISOString(),
+            callEnd: callEnd.toISOString()
+          });
+        },
+        error => {
+          console.log(error);
+          this.props.appState.setNoConnection();
+          resolve(undefined);
+        }
+      );
+    });
   };
 
   getDiagnosticsLog = async () => {
@@ -134,10 +151,6 @@ class Main extends Component {
 
   goChassis = () => {
     this.goScreen("Chassis", this.getChassisLog);
-  };
-
-  componentDidMount = async () => {
-    axios.defaults.baseURL = this.props.appState.baseUrl;
   };
 
   render() {

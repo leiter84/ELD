@@ -1,8 +1,13 @@
 import { observable, action, computed } from "mobx";
-import axios from "axios";
 class AppState {
   @observable
-  baseUrl = "https://eld-backend.azurewebsites.net/api/eld/";
+  baseUrl = "https://eld-backend.azurewebsites.net/api/eld";
+
+  @observable
+  username = "username";
+
+  @observable
+  password = "password";
 
   @observable
   connectionAvailable = true;
@@ -31,7 +36,16 @@ class AppState {
   @action
   updateBaseUrl = url => {
     this.baseUrl = url;
-    axios.defaults.baseURL = url;
+  };
+
+  @action
+  updateUsername = username => {
+    this.username = username;
+  };
+
+  @action
+  updatePassword = password => {
+    this.password = password;
   };
 
   @action

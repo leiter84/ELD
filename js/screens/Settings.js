@@ -28,7 +28,7 @@ class Diagnostics extends Component {
   state = {
     wifis: [],
     showModal: false,
-    password: "",
+    wifiPassword: "",
     ssid: ""
   };
 
@@ -40,8 +40,8 @@ class Diagnostics extends Component {
     return Platform.OS === "android";
   };
 
-  updatePassword = password => {
-    this.setState({ password });
+  updateWiFiPassword = wifiPassword => {
+    this.setState({ wifiPassword });
   };
 
   onNetworkSelect = ssid => {
@@ -49,16 +49,16 @@ class Diagnostics extends Component {
   };
 
   joinNetwork = () => {
-    const { password, ssid } = this.state;
-    this.connectToWifi(ssid, password);
+    const { wifiPassword, ssid } = this.state;
+    this.connectToWifi(ssid, wifiPassword);
   };
 
   closeDialog = () => {
-    this.setState({ showModal: false, password: "" });
+    this.setState({ showModal: false, wifiPassword: "" });
   };
 
-  connectToWifi = async (ssid, password) => {
-    wifi.findAndConnect(ssid, password, found => {
+  connectToWifi = async (ssid, wifiPassword) => {
+    wifi.findAndConnect(ssid, wifiPassword, found => {
       if (!found) {
         Alert.alert("Network is no longer available");
       } else {
@@ -80,7 +80,7 @@ class Diagnostics extends Component {
         });
       }
     });
-    this.setState({ password: "", showModal: false });
+    this.setState({ wifiPassword: "", showModal: false });
   };
 
   async componentDidMount() {
@@ -121,8 +121,15 @@ class Diagnostics extends Component {
   }
 
   render() {
-    const { baseUrl, updateBaseUrl } = this.props.appState;
-    const { showModal, password, ssid } = this.state;
+    const {
+      baseUrl,
+      username,
+      password,
+      updateBaseUrl,
+      updateUsername,
+      updatePassword
+    } = this.props.appState;
+    const { showModal, wifiPassword, ssid } = this.state;
     const title = `Join ${ssid} network`;
     return (
       <View style={[styles.flexItem]}>
@@ -132,6 +139,17 @@ class Diagnostics extends Component {
             value={baseUrl}
             onChangeText={text => updateBaseUrl(text)}
           />
+          <Common.CommonTextField
+            label="Auth Username"
+            value={username}
+            onChangeText={text => updateUsername(text)}
+          />
+          <Common.CommonTextField
+            label="Auth Password"
+            value={password}
+            secureTextEntry={true}
+            onChangeText={text => updatePassword(text)}
+          />
           <Common.CommonConfirmationDialog
             show={showModal}
             title={title}
@@ -139,14 +157,14 @@ class Diagnostics extends Component {
             dismissText="Cancel"
             onConfirm={this.joinNetwork}
             onDismiss={this.closeDialog}
-            confirmationDisabled={password === ""}
+            confirmationDisabled={wifiPassword === ""}
           >
             <View>
               <Common.CommonTextField
                 label="Password"
-                value={password}
+                value={wifiPassword}
                 secureTextEntry={true}
-                onChangeText={text => this.updatePassword(text)}
+                onChangeText={text => this.updateWifiPassword(text)}
               />
             </View>
           </Common.CommonConfirmationDialog>
