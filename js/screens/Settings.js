@@ -40,7 +40,7 @@ class Diagnostics extends Component {
     return Platform.OS === "android";
   };
 
-  updateWiFiPassword = wifiPassword => {
+  updateWifiPassword = wifiPassword => {
     this.setState({ wifiPassword });
   };
 
