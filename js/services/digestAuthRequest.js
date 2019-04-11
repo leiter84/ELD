@@ -18,8 +18,6 @@ const digestAuthRequest = function(method, url, username, password) {
       hostname = url.split("/")[0];
     }
 
-    //find & remove port number
-    hostname = hostname.split(":")[0];
     //find & remove "?"
     hostname = hostname.split("?")[0];
 
@@ -42,6 +40,7 @@ const digestAuthRequest = function(method, url, username, password) {
     .replace(domainName, "")
     .replace(protocol, "")
     .replace("://", "");
+  console.log("URI: ", this.uri);
 
   this.scheme = null; // we just echo the scheme, to allow for 'Digest', 'X-Digest', 'JDigest' etc
   this.nonce = null; // server issued nonce
