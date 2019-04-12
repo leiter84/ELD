@@ -15,7 +15,7 @@ import digestAuthRequest from "../services/digestAuthRequest";
 class Main extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: "ELD Diagnostic (v 0.1.1)",
+      title: "ELD Diagnostic (v 0.1.2)",
       headerLeft: (
         <CommonComponents.Settings navigation={navigation} />
       )

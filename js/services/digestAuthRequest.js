@@ -237,14 +237,11 @@ const digestAuthRequest = function(method, url, username, password) {
       "Accept",
       "application/json;version=2.0;resourceVersion=1"
     );
+    self.authenticatedRequest.setRequestHeader(
+      "Content-Type",
+      "application/json"
+    );
 
-    // if we are posting, add appropriate headers
-    if (self.post) {
-      self.authenticatedRequest.setRequestHeader(
-        "Content-type",
-        "application/json"
-      );
-    }
     self.authenticatedRequest.onload = function() {
       // success
       if (
