@@ -39,8 +39,8 @@ const digestAuthRequest = function(method, url, username, password) {
   this.uri = url
     .replace(domainName, "")
     .replace(protocol, "")
-    .replace("://", "");
-  console.log("URI: ", this.uri);
+    .replace("://", "")
+    .replace("//", "/");
 
   this.scheme = null; // we just echo the scheme, to allow for 'Digest', 'X-Digest', 'JDigest' etc
   this.nonce = null; // server issued nonce
@@ -48,7 +48,7 @@ const digestAuthRequest = function(method, url, username, password) {
   this.qop = null; // "quality of protection" - '' or 'auth' or 'auth-int'
   this.response = null; // hashed response to server challenge
   this.opaque = null; // hashed response to server challenge
-  this.nc = 1; // nonce count - increments with each request used with the same nonce
+  this.nc = 0; // nonce count - increments with each request used with the same nonce
   this.cnonce = null; // client nonce
 
   // settings
@@ -178,7 +178,6 @@ const digestAuthRequest = function(method, url, username, password) {
     } else {
       self.firstRequest.send();
     }
-    self.log("Unauthenticated request to " + url);
 
     // handle error
     self.firstRequest.onerror = function() {
@@ -217,24 +216,28 @@ const digestAuthRequest = function(method, url, username, password) {
       'response="' +
       self.response +
       '", ' +
-      /* 'opaque="' +
-      self.opaque +
-      '", ' + */
-      "qop=" +
+      /*'opaque="' +
+       self.opaque +
+      '", ' +*/
+      'qop="' +
       self.qop +
-      ", " +
+      '", ' +
       "nc=" +
       ("00000000" + self.nc).slice(-8) +
       ", " +
       'cnonce="' +
       self.cnonce +
       '"';
+    console.log("Request Header: ", digestAuthHeader);
     self.authenticatedRequest.setRequestHeader(
       "Authorization",
       digestAuthHeader
     );
-    self.log("digest auth header response to be sent:");
-    self.log(digestAuthHeader);
+    self.authenticatedRequest.setRequestHeader(
+      "Accept",
+      "application/json;version=2.0;resourceVersion=1"
+    );
+
     // if we are posting, add appropriate headers
     if (self.post) {
       self.authenticatedRequest.setRequestHeader(
@@ -293,18 +296,21 @@ const digestAuthRequest = function(method, url, username, password) {
     self.log("Authenticated request to " + url);
   };
 
-  // hash response based on server challenge
+  // generate RESPONSE
   this.formulateResponse = function() {
     var HA1 = CryptoJS.MD5(
       username + ":" + self.realm + ":" + password
     ).toString();
+
     var HA2 = CryptoJS.MD5(method + ":" + self.uri).toString();
+    var nc = ("00000000" + self.nc).slice(-8);
+
     var response = CryptoJS.MD5(
       HA1 +
         ":" +
         self.nonce +
         ":" +
-        ("00000000" + self.nc).slice(-8) +
+        nc +
         ":" +
         self.cnonce +
         ":" +
@@ -314,7 +320,8 @@ const digestAuthRequest = function(method, url, username, password) {
     ).toString();
     return response;
   };
-  // generate 16 char client nonce
+
+  // generate CNONCE
   this.generateCnonce = function() {
     var characters = "abcdef0123456789";
     var token = "";

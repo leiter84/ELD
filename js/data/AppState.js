@@ -4,10 +4,10 @@ class AppState {
   baseUrl = "https://eld-backend.azurewebsites.net/api/eld";
 
   @observable
-  username = "username";
+  username = "volvo";
 
   @observable
-  password = "password";
+  password = "volvo";
 
   @observable
   connectionAvailable = true;
