@@ -1,7 +1,7 @@
 import { observable, action, computed } from "mobx";
 class AppState {
   @observable
-  baseUrl = "https://eld-backend.azurewebsites.net/api/eld";
+  baseUrl = "http://192.168.12.1:33080/api/eld";
 
   @observable
   username = "volvo";
