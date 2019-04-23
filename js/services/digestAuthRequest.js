@@ -217,9 +217,9 @@ const digestAuthRequest = function(method, url, username, password) {
       /*'opaque="' +
        self.opaque +
       '", ' +*/
-      'qop="' +
+      "qop=" +
       self.qop +
-      '", ' +
+      ", " +
       "nc=" +
       ("00000000" + self.nc).slice(-8) +
       ", " +
