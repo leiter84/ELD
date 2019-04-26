@@ -8,14 +8,15 @@ import * as CommonComponents from "../components/Common";
 import * as Icons from "../components/Icons";
 import { styles } from "../styles";
 
-import digestAuthRequest from "../services/digestAuthRequest";
+//import digestAuthRequest from "../services/digestAuthRequest";
+import DigestFetch from "../services/digest-fetch";
 
 @inject("appState")
 @observer
 class Main extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: "ELD Diagnostic (v 0.1.4)",
+      title: "ELD Diagnostic (v 0.1.5)",
       headerLeft: (
         <CommonComponents.Settings navigation={navigation} />
       )
@@ -26,7 +27,7 @@ class Main extends Component {
     appState: PropTypes.any
   };
 
-  getAuthDigestClient = path => {
+  /* getAuthDigestClient = path => {
     const { baseUrl, username, password } = this.props.appState;
     return new digestAuthRequest(
       "GET",
@@ -34,14 +35,46 @@ class Main extends Component {
       username,
       password
     );
+  }; */
+
+  getAuthDigestClient = () => {
+    const { username, password } = this.props.appState;
+    return new DigestFetch(username, password, {
+      algorithm: "MD5"
+    });
   };
 
   getWithTimestamps = async path => {
-    const getRequestClient = this.getAuthDigestClient(path);
+    const { baseUrl } = this.props.appState;
+    //const getRequestClient = this.getAuthDigestClient(path);
+    const digestClient = this.getAuthDigestClient();
 
     return new Promise(resolve => {
       const callStart = new Date();
-      getRequestClient.request(
+      digestClient
+        .fetch(`${baseUrl}/${path}`.replace("eld//", "eld/"), {
+          headers: {
+            Accept: "application/json;version=2.0;resourceVersion=1",
+            "Content-Type": "application/json"
+          }
+        })
+        .then(response => response.json())
+        .then(result => {
+          console.log(result);
+          const callEnd = new Date();
+          resolve({
+            ...result,
+            callStart: callStart.toISOString(),
+            callEnd: callEnd.toISOString()
+          });
+        })
+        .catch(error => {
+          console.log(error);
+          this.props.appState.setNoConnection();
+          resolve(undefined);
+        });
+
+      /* getRequestClient.request(
         data => {
           const callEnd = new Date();
           console.log(data);
@@ -56,7 +89,7 @@ class Main extends Component {
           this.props.appState.setNoConnection();
           resolve(undefined);
         }
-      );
+      ); */
     });
   };
 
