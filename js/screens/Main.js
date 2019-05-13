@@ -16,7 +16,7 @@ import DigestFetch from "../services/digest-fetch";
 class Main extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: "ELD Diagnostic (v 0.1.5)",
+      title: "ELD Diagnostic (v 0.1.6)",
       headerLeft: (
         <CommonComponents.Settings navigation={navigation} />
       )

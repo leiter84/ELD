@@ -8,7 +8,7 @@ export default class DigestClient {
     this.digest = { nc: 0, algorithm: options.algorithm || "MD5" };
     this.hasAuth = false;
     const _cnonceSize = parseInt(options.cnonceSize);
-    this.cnonceSize = isNaN(_cnonceSize) ? 32 : _cnonceSize; // cnonce length 32 as default
+    this.cnonceSize = isNaN(_cnonceSize) ? 8 : _cnonceSize; // cnonce length 8 as default
     this.logger = options.logger;
   }
 
@@ -41,14 +41,19 @@ export default class DigestClient {
     const _url = url.replace("//", "");
     const uri =
       _url.indexOf("/") == -1 ? "/" : _url.slice(_url.indexOf("/"));
+
     const method = options.method
       ? options.method.toUpperCase()
       : "GET";
+
     const ha1 = cryptojs
       .MD5(`${this.user}:${this.digest.realm}:${this.password}`)
       .toString();
+
     const ha2 = cryptojs.MD5(`${method}:${uri}`).toString();
+
     const ncString = ("00000000" + this.digest.nc).slice(-8);
+
     const response = cryptojs
       .MD5(
         `${ha1}:${this.digest.nonce}:${ncString}:${
@@ -56,18 +61,21 @@ export default class DigestClient {
         }:${this.digest.qop}:${ha2}`
       )
       .toString();
+
     const opaqueString = this.digest.opaque
-      ? `opaque="${this.digest.opaque}",`
+      ? ` opaque="${this.digest.opaque}", `
       : "";
+
     const digest = `${this.digest.scheme} username="${
       this.user
-    }",realm="${this.digest.realm}",\
-nonce="${this.digest.nonce}",uri="${uri}",${opaqueString}\
-qop=${this.digest.qop},algorithm="${
+    }", realm="${this.digest.realm}", \
+nonce="${this.digest.nonce}", uri="${uri}",${opaqueString}\
+qop=${this.digest.qop}, algorithm="${
       this.digest.algorithm
-    }",response="${response}",nc=${ncString},cnonce="${
+    }", response="${response}", nc=${ncString}, cnonce="${
       this.digest.cnonce
     }"`;
+
     options.headers = options.headers || {};
     options.headers.Authorization = digest;
     if (this.logger) {
@@ -104,11 +112,11 @@ qop=${this.digest.qop},algorithm="${
     const _nonce = /nonce="([^"]+)"/i.exec(h);
     if (_nonce) this.digest.nonce = _nonce[1];
 
-    this.digest.cnonce = this.makeNonce();
+    this.digest.cnonce = this.makeCnonce();
     this.digest.nc++;
   }
 
-  makeNonce() {
+  makeCnonce() {
     let uid = "";
     for (let i = 0; i < this.cnonceSize; ++i) {
       uid += this.nonceRaw[
