@@ -186,6 +186,29 @@ class Main extends Component {
     this.goScreen("Chassis", this.getChassisLog);
   };
 
+  componentDidMount() {
+    const digestClient = this.getAuthDigestClient();
+    digestClient
+      .fetch(
+        `http://localhost:33080/api/eld/esn`.replace("eld//", "eld/"),
+        {
+          headers: {
+            Accept: "application/json;version=2.0;resourceVersion=1",
+            "Content-Type": "application/json",
+            "Accept-Encoding": "gzip, deflate",
+            Connection: "keep-alive",
+            "Cache-Control": "no-cache"
+          }
+        }
+      )
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
   render() {
     return (
       <View

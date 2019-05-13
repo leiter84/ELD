@@ -50,6 +50,8 @@ export default class DigestClient {
       .MD5(`${this.user}:${this.digest.realm}:${this.password}`)
       .toString();
 
+    console.log("HA1: ", ha1);
+
     const ha2 = cryptojs.MD5(`${method}:${uri}`).toString();
 
     const ncString = ("00000000" + this.digest.nc).slice(-8);
@@ -61,20 +63,23 @@ export default class DigestClient {
         }:${this.digest.qop}:${ha2}`
       )
       .toString();
+    console.log("Response: ", response);
 
     const opaqueString = this.digest.opaque
-      ? ` opaque="${this.digest.opaque}", `
+      ? ` opaque="${this.digest.opaque}",`
       : "";
 
     const digest = `${this.digest.scheme} username="${
       this.user
-    }", realm="${this.digest.realm}", \
-nonce="${this.digest.nonce}", uri="${uri}",${opaqueString}\
-qop=${this.digest.qop}, algorithm="${
+    }", realm="${this.digest.realm}", nonce="${
+      this.digest.nonce
+    }", uri="${uri}",${opaqueString} algorithm="${
       this.digest.algorithm
-    }", response="${response}", nc=${ncString}, cnonce="${
+    }", qop=${this.digest.qop}, nc=${ncString}, cnonce="${
       this.digest.cnonce
-    }"`;
+    }", response="${response}"`;
+
+    console.log(digest);
 
     options.headers = options.headers || {};
     options.headers.Authorization = digest;
