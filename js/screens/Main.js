@@ -8,7 +8,6 @@ import * as CommonComponents from "../components/Common";
 import * as Icons from "../components/Icons";
 import { styles } from "../styles";
 
-//import digestAuthRequest from "../services/digestAuthRequest";
 import DigestFetch from "../services/digest-fetch";
 
 @inject("appState")
@@ -16,7 +15,7 @@ import DigestFetch from "../services/digest-fetch";
 class Main extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: "ELD Diagnostic (v 0.1.6)",
+      title: "ELD Diagnostic (v 0.1.7)",
       headerLeft: (
         <CommonComponents.Settings navigation={navigation} />
       )
@@ -27,16 +26,6 @@ class Main extends Component {
     appState: PropTypes.any
   };
 
-  /* getAuthDigestClient = path => {
-    const { baseUrl, username, password } = this.props.appState;
-    return new digestAuthRequest(
-      "GET",
-      `${baseUrl}${path}`,
-      username,
-      password
-    );
-  }; */
-
   getAuthDigestClient = () => {
     const { username, password } = this.props.appState;
     return new DigestFetch(username, password, {
@@ -46,7 +35,6 @@ class Main extends Component {
 
   getWithTimestamps = async path => {
     const { baseUrl } = this.props.appState;
-    //const getRequestClient = this.getAuthDigestClient(path);
     const digestClient = this.getAuthDigestClient();
 
     return new Promise(resolve => {
@@ -73,29 +61,12 @@ class Main extends Component {
           this.props.appState.setNoConnection();
           resolve(undefined);
         });
-
-      /* getRequestClient.request(
-        data => {
-          const callEnd = new Date();
-          console.log(data);
-          resolve({
-            ...data,
-            callStart: callStart.toISOString(),
-            callEnd: callEnd.toISOString()
-          });
-        },
-        error => {
-          console.log(error);
-          this.props.appState.setNoConnection();
-          resolve(undefined);
-        }
-      ); */
     });
   };
 
   getDiagnosticsLog = async () => {
     const data = await this.getWithTimestamps(
-      "/diagnostic_service_state"
+      "/diagnostic_service_state/"
     );
     if (data) {
       this.props.appState.addNewDiagnosticLog(data);
@@ -104,7 +75,7 @@ class Main extends Component {
   };
 
   getEsnLog = async () => {
-    const data = await this.getWithTimestamps("/esn");
+    const data = await this.getWithTimestamps("/esn/");
     if (data) {
       this.props.appState.addNewEsnLog(data);
       this.props.appState.setConnection();
@@ -112,7 +83,7 @@ class Main extends Component {
   };
 
   getGpsLog = async () => {
-    const data = await this.getWithTimestamps("/gps");
+    const data = await this.getWithTimestamps("/gps/");
     if (data) {
       this.props.appState.addNewGpsLog(data);
       this.props.appState.setConnection();
@@ -120,7 +91,7 @@ class Main extends Component {
   };
 
   getTachometerLog = async () => {
-    const data = await this.getWithTimestamps("/hours_of_service");
+    const data = await this.getWithTimestamps("/hours_of_service/");
     if (data) {
       this.props.appState.addNewTachometerLog(data);
       this.props.appState.setConnection();
@@ -128,7 +99,7 @@ class Main extends Component {
   };
 
   getOdometerLog = async () => {
-    const data = await this.getWithTimestamps("/odometer");
+    const data = await this.getWithTimestamps("/odometer/");
     if (data) {
       this.props.appState.addNewOdometerLog(data);
       this.props.appState.setConnection();
@@ -136,7 +107,7 @@ class Main extends Component {
   };
 
   getVinLog = async () => {
-    const data = await this.getWithTimestamps("/vin");
+    const data = await this.getWithTimestamps("/vin/");
     if (data) {
       this.props.appState.addNewVinLog(data);
       this.props.appState.setConnection();
@@ -144,7 +115,7 @@ class Main extends Component {
   };
 
   getChassisLog = async () => {
-    const data = await this.getWithTimestamps("/chassisid");
+    const data = await this.getWithTimestamps("/chassisid/");
     if (data) {
       this.props.appState.addNewChassisLog(data);
       this.props.appState.setConnection();
@@ -190,7 +161,10 @@ class Main extends Component {
     const digestClient = this.getAuthDigestClient();
     digestClient
       .fetch(
-        `http://localhost:33080/api/eld/esn`.replace("eld//", "eld/"),
+        `${this.props.appState.baseUrl}/esn/`.replace(
+          "eld//",
+          "eld/"
+        ),
         {
           headers: {
             Accept: "application/json;version=2.0;resourceVersion=1",
